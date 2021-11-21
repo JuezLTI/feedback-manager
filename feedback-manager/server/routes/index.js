@@ -1,6 +1,6 @@
 // routes/index.js and users.js
 import express from "express";
-import EvaluationReport from "evaluation-report";
+import EvaluationReport from "evaluation-report-juezlti";
 
 var router = express.Router();
 // ..stuff below
