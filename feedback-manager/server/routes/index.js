@@ -7,14 +7,10 @@ var router = express.Router();
 
 router.post("/", function(req, res) {
     let evalReq = undefined;
-    let evalRes = undefined;
-    console.log(" my body " + req)
     console.log((evalReq = new EvaluationReport(req.body)));
-
-    evalRes = new EvaluationReport();
+    let response = "";
     if (evalReq) {
-        evalRes = new EvaluationReport(req.body);
-        let response = "";
+
 
         let e = evalReq.reply.report.compilationErrors;
 
@@ -41,25 +37,10 @@ router.post("/", function(req, res) {
             response =
                 "The XPATH expression is grammatically and semantically correct";
         }
-        evalRes.reply.report.feedback_response = response;
     } else {
-        let reply = {
-            report: {
-                capability: {
-                    id: "XPath-evaluator",
-                    features: [
-                        { name: "language", value: "" },
-                        { name: "version", value: "" },
-                        { name: "engine", value: "" },
-                    ],
-                },
-                exercise: "00000000-0000-0000-0000-000000000000",
-                "feedback_response ": "It's not possible to parse the incoming PEARL JSON",
-            },
-        };
-        evalRes.setReply(reply);
+        response = "It's not possible to parse the incoming PEARL JSON";
     }
-    res.send(evalRes);
+    res.send(JSON.stringify({ "message": response }));
 });
 
 function IsJsonString(str) {
