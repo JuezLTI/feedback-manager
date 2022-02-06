@@ -17,7 +17,7 @@
     "scripts": {
         "start": "npm run prod",
         "build": "npm-run-all clean transpile",
-        "server": "node ./dist-server/bin/www",
+        "server": "PORT=8081 node ./dist-server/bin/www",
         "dev": "NODE_ENV=development npm-run-all build server",
         "prod": "NODE_ENV=production npm-run-all build server",
         "transpile": "babel ./server --out-dir dist-server",
@@ -35,9 +35,6 @@
         "morgan": "~1.9.1",
         "nodemon": "^2.0.14",
         "npm-run-all": "^4.1.5",
-        "programming-exercise-juezlti": "^1.0.5-a",
-        "regenerator-runtime": "^0.13.9",
-        "regjsgen": "^0.7.0",
         "rimraf": "^3.0.2"
     },
     "babel": {
