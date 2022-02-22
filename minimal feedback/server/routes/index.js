@@ -17,7 +17,7 @@ router.post("/", function(req, res) {
           
             let response = "";
     
-            let e = evalReq.reply.report.compilationErrors;
+            let e = evalReq.reply?.report?.compilationErrors;
       
             if (e) {
                 switch (e.length) {
