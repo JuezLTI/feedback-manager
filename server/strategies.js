@@ -132,6 +132,9 @@ module.exports = {
             if (exercise.keywords.map(keyword => keyword.toLowerCase()).includes("withai")){ // if true, then generate extra feedback with AI
                 await generateByAI(isWrongBecauseOfACompilationProblem, isCorrect, full_report).then(feedbackAI => {
                     generatedAIFeedback = "\n" + feedbackAI;
+                })
+                .catch(err => {
+                    console.log(err);
                 });
             }
 

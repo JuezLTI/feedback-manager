@@ -1,7 +1,6 @@
 require('dotenv').config() // for loading the environment variables from .env file
 const { OpenAI } = require('openai'); // don't forget adding "openai": "^4.35.0" on package.json and package-lock.json dependencies
 const AI_KEY = process.env.OPENAI_API_KEY; // get your personal openAI API key from .env file
-const openai = new OpenAI({ AI_KEY }); // new instance of the OpenAI class with the API key provided as an argument
 
 module.exports = {
 
@@ -57,6 +56,7 @@ module.exports = {
 
         // OpenAI API access
         try {
+            const openai = new OpenAI({ AI_KEY }); // new instance of the OpenAI class with the API key provided as an argument
             const completion = await openai.chat.completions.create({
                 messages: [{ "role": "user", "content": selectedPrompt }],
                 model: process.env.OPENAI_API_MODEL
@@ -70,19 +70,7 @@ module.exports = {
             return feedbackText;
 
         } catch (error) { // Handle the error according to its status code
-            if (error.status === 401) { // Incorrect or missing API key
-                if (AI_KEY == "") return "IA Authentication Error (401): Missing API key.";
-                else return "IA Authentication Error (401): Incorrect API key.";
-
-            } else if (error.status === 400) { //         
-                return `IA Bad Request (400):  ${error.message}`;
-
-            } else if (error.status === 500) { // 
-                return `IA Internal Server Error (500): ${error.message}`;
-
-            } else { // Other errors
-                return `IA Generic Error (${error.status}): ${error.message}`;
-            }            
+            throw new Error(error);
         }
     }
 }
