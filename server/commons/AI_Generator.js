@@ -5,6 +5,7 @@ const AI_KEY = process.env.OPENAI_API_KEY; // get your personal openAI API key f
 module.exports = {
 
     generateByAI: async function generateByIA(isWrongBecauseOfACompilationProblem, isCorrect, full_report) {
+        if(AI_KEY === undefined || AI_KEY === "") return "";
 
         let answer = full_report.request.program; // get the student answer
         let language = full_report.request.language; // get the test code language
