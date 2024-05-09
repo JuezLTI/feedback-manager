@@ -25,7 +25,7 @@ module.exports = {
                          answer + "\n" +
                          "```" + "\n" +
                          "and take note of any relevant aspects." + "\n" +
-                         "Now, in no more than 40 words, "; // initialize the selected prompt
+                         "Now, in no more than 40 words in markdown format, "; // initialize the selected prompt
 
         // Prompt when student provides a CORRECT answer
         if (isCorrect)
@@ -68,7 +68,7 @@ module.exports = {
             completion.choices.forEach(choice => {
                 feedbackText += choice.message.content;
             });
-            return feedbackText;
+            return "\n### Advice from Artificial Intelligence:\n\n" + feedbackText;
 
         } catch (error) { // Handle the error according to its status code
             throw new Error(error);
