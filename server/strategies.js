@@ -152,7 +152,7 @@ module.exports = {
                 });
 
             } else if (isCorrect) {                
-                    let feedback_text = "Congratulations!!!! you have submitted the correct answer" + generatedAIFeedback;
+                    let feedback_text = "Congratulations!!!! you have submitted the correct answer";
                     let number_of_correct_tests = [];
 
                     [...Array(input.number_of_tests)].forEach((el, index) => {
@@ -162,12 +162,12 @@ module.exports = {
                     persist_feedback(input, student_id, "Congratulations", feedback_text, feedback_id => {
                         persist_report(feedback_id, full_report, report_id => {
                             //Resolve as array because resolve can only contain one value
-                            resolve([feedback_text, feedback_id, report_id]);
+                            resolve([feedback_text + generatedAIFeedback, feedback_id, report_id]);
                         });
                     });
                                 
             } else if (isWrongBecauseOfACompilationProblem) {                
-                    let feedback_text = full_report.summary.feedback + generatedAIFeedback;;
+                    let feedback_text = full_report.summary.feedback;
                     let evaluation_report = {
                         "exercise": input.exercise,
                         "compilationErrors": [],
@@ -178,7 +178,7 @@ module.exports = {
                     persist_feedback(evaluation_report, student_id, full_report.summary.classify, full_report.summary.feedback, feedback_id => {
                         persist_report(feedback_id, full_report, report_id => {
                             //Resolve as array because resolve can only contain one value
-                            resolve([feedback_text, feedback_id, report_id]);
+                            resolve([feedback_text + generatedAIFeedback, feedback_id, report_id]);
                         });
                     });
                 
