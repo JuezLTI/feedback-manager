@@ -86,7 +86,7 @@ router.post("/", async function(req, res) {
                     input.summary = {}
                 }
                 input.summary.feedback = feedback[0]
-                input.reply.report.tests = input.reply.report.tests.filter(function(el){return el.visible != false});
+//                input.reply.report.tests = input.reply.report.tests.filter(function(el){return el.visible != false});
                 res.json(input);
             }).catch((error) => {
                 console.log(error)
