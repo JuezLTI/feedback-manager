@@ -74,7 +74,7 @@ module.exports = {
     //Insert to DB
     insert:function insert(obj) {
         return new Promise((resolve, reject) => {
-            collection.insert(obj, function(err, result) {
+            collection.insertOne(obj, function(err, result) {
                 if (err) {
                     console.log(err);
                     reject(err)
