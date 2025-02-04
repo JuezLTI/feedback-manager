@@ -1,6 +1,8 @@
 require('dotenv').config() // for loading the environment variables from .env file
 const { OpenAI } = require('openai'); // don't forget adding "openai": "^4.35.0" on package.json and package-lock.json dependencies
+import Anthropic from '@anthropic-ai/sdk';
 const AI_KEY = process.env.OPENAI_API_KEY; // get your personal openAI API key from .env file
+const AI_MODEL = process.env.OPENAI_API_MODEL;
 
 module.exports = {
 
@@ -57,17 +59,27 @@ module.exports = {
 
         // OpenAI API access
         try {
-            const openai = new OpenAI({ AI_KEY }); // new instance of the OpenAI class with the API key provided as an argument
-            const completion = await openai.chat.completions.create({
-                messages: [{ "role": "user", "content": selectedPrompt }],
-                model: process.env.OPENAI_API_MODEL
-            });
-
-            // Convert to a string
             let feedbackText = "";
-            completion.choices.forEach(choice => {
+	  if(AI_MODEL.startsWith('gpt')) {
+            const openai = new OpenAI({ AI_KEY }); // new instance of the OpenAI class with the API key provided as an argument
+            const aiResponse = await openai.chat.completions.create({
+                messages: [{ "role": "user", "content": selectedPrompt }],
+                model: AI_MODEL
+            });
+            aiResponse.choices.forEach(choice => {
                 feedbackText += choice.message.content;
             });
+          } else if(AI_MODEL.startsWith('claude')) {
+            const anthropic = new Anthropic({apiKey: AI_KEY });
+            const aiResponse = await anthropic.messages.create({
+                messages: [{ "role": "user", "content": selectedPrompt }],
+		max_tokens: 256,
+                model: AI_MODEL
+            });
+            aiResponse.content.forEach(message => {
+                feedbackText += message.text;
+            });
+          }
             return "\n### Advice from Artificial Intelligence:\n\n" + feedbackText;
 
         } catch (error) { // Handle the error according to its status code
