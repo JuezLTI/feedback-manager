@@ -1,6 +1,6 @@
 var fs = require('fs')
 var path = require('path')
-var {db, closeConnection, insert, createIndex, checkIfExist, remove, removeMany} = require('./commons/dbManager.js')
+var {db, closeConnection, insertOne, createIndex, checkIfExist, remove, removeMany} = require('./commons/dbManager.js')
 var feedbackItem = require('./commons/feedbackItem.js')
 var {ProgrammingExercise} = require('programming-exercise-juezlti')
 var fillFile = require('./commons/fill.js')
@@ -222,7 +222,7 @@ module.exports = {
 //Store reports in DB
 function persist_report(feedback_id, full_report, callback) {
     let ins = () => {
-        insert({
+        insertOne({
             "feedback_id": feedback_id,
             "full_report": full_report,
             "reported_time": Date.now()
@@ -258,7 +258,7 @@ function persist_report(feedback_id, full_report, callback) {
 //Store feedback in DB
 function persist_feedback(evaluation_report, student_id, feedback_name, feedback_text, callback) {
     let ins = () => {
-        insert({
+        insertOne({
                 "student_id": student_id,
                 "exercise_id": evaluation_report.exercise,
                 "correct_tests": (evaluation_report.tests.map((value, index) => { if (value.classify == "Accepted") return index })).filter((value) => { return value != undefined ? true : false }),

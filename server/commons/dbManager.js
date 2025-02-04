@@ -72,14 +72,14 @@ module.exports = {
     },
 
     //Insert to DB
-    insert:function insert(obj) {
+    insertOne:function insertOne(obj) {
         return new Promise((resolve, reject) => {
             collection.insertOne(obj, function(err, result) {
                 if (err) {
                     console.log(err);
                     reject(err)
                 } else {
-                    resolve(result.insertedIds['0'])
+                    resolve(result.insertedId)
                 }
 
             });
